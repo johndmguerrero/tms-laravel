@@ -15,11 +15,13 @@ class TaskController extends Controller
      */
     public function index()
     {
-        if(Auth::check()){
-            return view('auth.home');
-        }else{
-            return view('welcome');
-        }
+        // if(Auth::check()){
+        //     return view('auth.log');
+        // }else{
+        //     return view('welcome');
+        // }
+        $tasks = Task::all();
+        return view('tasks/index',compact($tasks));
     }
 
     /**
@@ -41,6 +43,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
+        Task::create($request->all());
     }
 
     /**
