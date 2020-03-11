@@ -51,7 +51,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li class="{{ (request()->is('home')) ? 'active' : '' }}" ><a href="{{ route('home') }}">Dashboard</a></li>
+                        <li class="{{ (request()->is('tasks*')) ? 'active' : '' }}" ><a href="{{ route('tasks.index') }}">Tasks</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
