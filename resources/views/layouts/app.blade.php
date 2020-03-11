@@ -13,6 +13,21 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
+<style>
+
+.sm-text{
+    font-size: 13px;
+}
+.m-0{
+    margin: 0;
+}
+.p-0{
+    padding: 0;
+}
+
+</style>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">

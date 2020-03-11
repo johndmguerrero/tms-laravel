@@ -2,13 +2,13 @@
 
 @section('content')
 
-    <style>
-        .sm-text{
-            font-size: 10px;
-        }
-    </style>
-
     <div class="container">
-        <h4>Tasks/<a href="#" class="sm-text">Create</a></h4>
+        <div class="app-heading">
+
+            <h2 class="pull-left m-0">Tasks</h2>
+            <a href="#" class="sm-text btn-success btn btn-default pull-right">Create</a>
+
+        </div>
     </div>
+
 @endsection
