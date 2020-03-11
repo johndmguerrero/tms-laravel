@@ -6,9 +6,14 @@
         <div class="app-heading">
 
             <h2 class="pull-left m-0">Tasks</h2>
-            <a href="#" class="sm-text btn-success btn btn-default pull-right">Create</a>
+            <a href="./tasks/create" class="sm-text btn-success btn btn-default pull-right">Create</a>
 
         </div>
+
+        <div class="app-content">
+
+        </div>
+
     </div>
 
 @endsection
