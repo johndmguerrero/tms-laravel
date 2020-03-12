@@ -3,6 +3,12 @@
 @section('content')
 
     <div class="container">
+
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         
         <div class="app-heading">
             <form action=" {{ route('tasks.store') }}" method="POST">

@@ -43,14 +43,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $names = $request->all();
-        
-        $names["creatorid"] = Auth::id();
 
-        Task::create($names);
-        return view('tasks.create');
-        
+        // Validation
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'duedate' => 'required',
+            'status' => 'required',
+        ]);
+
+        //
+        $request = $request->all();
+        $request["creatorid"] = Auth::id();
+
+        Task::create($request);
+        return redirect()->route('tasks.create')
+                         ->with('success','Task Created successfully.');
+
     }
 
     /**
