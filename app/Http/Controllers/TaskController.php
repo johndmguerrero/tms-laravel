@@ -93,6 +93,21 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'duedate' => 'required',
+            'status' => 'required',
+        ]);
+
+        //
+        $request = $request->all();
+        $request["creatorid"] = Auth::id();
+
+        $task->update($request);
+        return redirect()->route('tasks.index')
+                         ->with('success','Task Updated successfully.');
+
     }
 
     /**

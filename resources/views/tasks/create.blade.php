@@ -28,12 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sel1">Status:</label>
-                            <select class="form-control" name="status" id="sel1">
-                              <option>Pending</option>
-                              <option>Active</option>
-                              <option>Blocked</option>
-                              <option>Done</option>
-                            </select>
+                            {{ Form::select('status',['Pending','Active','Blocked','Done'],'',[ 'class' => 'form-control' ] )}}
                           </div>
                     </div>
                     <div class="panel-footer">
