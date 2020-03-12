@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // list of Tasks
-Route::get('task','TaskController@index');
+Route::get('tasks','TaskController@index');
 
 // Single task
 Route::get('task/{task}','TaskController@show');
@@ -30,4 +30,5 @@ Route::post('task','TaskController@store');
 Route::put('task','TaskController@store');
 
 // Delete Task
+// Route::delete('task/{task}','TaskController@destroy');
 Route::delete('task/{task}','TaskController@destroy');
