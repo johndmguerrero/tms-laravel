@@ -25,11 +25,12 @@
                     <p>{{ $item->duedate }}</p>
                 </div>
                 <div class="task-action">
-                    <form action="{{ route('tasks.destroy',$item->id ) }}" method="post"></form>
-                    {{ csrf_field() }}
-                    @method('DELETE')
-                    <a href="{{ route('tasks.edit',$item->id )}}" class="btn btn-default btn-warning">edit</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <form action="{{ route('tasks.destroy',$item->id ) }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <a href="{{ route('tasks.edit',$item->id )}}" class="btn btn-default btn-warning">edit</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
             </div>
         @endforeach    

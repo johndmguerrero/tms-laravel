@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +16,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-
-        $tasks = Task::all();
-        
+        $user = Auth::id();
+        $tasks = Task::where('creatorid',$user)->get();
         return view('tasks.index',compact('tasks'));
     }
 
@@ -119,5 +119,9 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+        $task->delete();
+
+        return redirect()->route('tasks.index')
+                         ->with('success','Task Deleted successfully');
     }
 }
