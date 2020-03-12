@@ -18,16 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // list of Tasks
-Route::get('tasks','TaskController@index');
+Route::get('task','TaskController@index');
 
 // Single task
-Route::get('tasks/{id}','TaskController@show');
+Route::get('task/{task}','TaskController@show');
 
 // Create new Task
 Route::post('task','TaskController@store');
 
 // Update Task
-Route::put('tasks','TaskController@store');
+Route::put('task','TaskController@store');
 
 // Delete Task
-Route::delete('tasks','TaskController@destroy');
+Route::delete('task/{task}','TaskController@destroy');

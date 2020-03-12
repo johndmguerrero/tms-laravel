@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\User;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Task as TaskResource;
 
 class TaskController extends Controller
 {
@@ -16,9 +18,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $user = Auth::id();
-        $tasks = Task::where('creatorid',$user)->get();
-        return view('tasks.index',compact('tasks'));
+        // ----- non API fetch
+        // $user = Auth::id();
+        // $tasks = Task::where('creatorid',$user)->get();
+        // return view('tasks.index',compact('tasks'));
+        
+        // ------ API fetch
+        $tasks = Task::all();
+        
+        return TaskResource::collection($tasks);
     }
 
     /**
@@ -42,21 +50,35 @@ class TaskController extends Controller
     {
 
         // Validation
+            // non-api 
+        // $request->validate([
+        //     'name' => 'required',
+        //     'description' => 'required',
+        //     'duedate' => 'required',
+        //     'status' => 'required',
+        // ]);
 
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'duedate' => 'required',
-            'status' => 'required',
-        ]);
+        // //
+        // $request = $request->all();
+        // $request["creatorid"] = Auth::id();
 
-        //
-        $request = $request->all();
-        $request["creatorid"] = Auth::id();
+        // Task::create($request);
+        // return redirect()->route('tasks.create')
+        //                  ->with('success','Task Created successfully.');
 
-        Task::create($request);
-        return redirect()->route('tasks.create')
-                         ->with('success','Task Created successfully.');
+        $holdtask = $request->isMethod('put') ? Task::findOrFail($request->id) : new Task;
+        // protected $fillable = [ 'id','name','creatorid' ,'description','duedate','status' ];
+        
+        $holdtask->id = $request->input('id');
+        $holdtask->name = $request->input('name');
+        $holdtask->creatorid = $request->input('creatorid', Auth::id() );
+        $holdtask->description = $request->input('description');
+        $holdtask->duedate = $request->input('duedate');
+        $holdtask->status = $request->input('status');
+
+        if($holdtask->save()){
+            return new TaskResource($holdtask);
+        }
 
     }
 
@@ -68,7 +90,11 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+
+        $data = Task::findOrFail($task);
+
+        return new TaskResource($task);
+
     }
 
     /**
@@ -119,9 +145,12 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
-        $task->delete();
+        $task = Task::findOrFail($task);
 
-        return redirect()->route('tasks.index')
-                         ->with('success','Task Deleted successfully');
+        if($task->delete()){
+            return new TaskResource($task);
+        }
+        // return redirect()->route('tasks.index')
+        //                  ->with('success','Task Deleted successfully');
     }
 }
