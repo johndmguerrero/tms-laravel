@@ -44724,7 +44724,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n.border-blue[data-v-7168fb6a]{\n    border-color: #5fafe6;\n}\n.panel-task[data-v-7168fb6a]{\n    height: 83vh;\n}\n", ""]);
+exports.push([module.i, "\n.border-blue[data-v-7168fb6a]{\n    border-color: #5fafe6;\n}\n.panel-task-form[data-v-7168fb6a]{\n    margin: 10px;\n}\n[class^=\"status-\"][data-v-7168fb6a]{\n    margin: 20px;\n    padding: 15px;\n    border-radius: 5px;\n    max-width: 300px;\n    padding-left: 20px;\n    background-color:#fff;\n    border-left: 5px solid;\n    -webkit-box-shadow: 0px 3px 5px 1px #0000001c;\n            box-shadow: 0px 3px 5px 1px #0000001c;\n}\n.status-blocked[data-v-7168fb6a]{\n    border-color:#e89494;\n}\n.status-active[data-v-7168fb6a]{\n    border-color:#79c3ef;\n}\n.status-pending[data-v-7168fb6a]{\n    border-color:#efaa79;\n}\n.status-done[data-v-7168fb6a]{\n    border-color:#a1e894;\n}\n[class^=\"status-\"] h3[data-v-7168fb6a]{\n    font-weight: 600;\n    margin: 5px 0px;\n    line-height: 20px;\n    font-size: 18px;\n}\n[class^=\"status-\"] p[data-v-7168fb6a]{\n    margin: 0;\n}\n.task-navi[data-v-7168fb6a]{\n    padding: 15px 0;\n}\n.task-navi .nav-pills[data-v-7168fb6a]{\n    margin:0;\n    padding:0;\n}\n.task-navi .nav-pills > li[data-v-7168fb6a]{\n    float:unset;\n}\n.nav-pills > li.active > a[data-v-7168fb6a],\n.nav-pills > li.active > a[data-v-7168fb6a]:hover,\n.nav-pills > li.active > a[data-v-7168fb6a]:focus{\n    border-left: 3px solid #5fafe6;\n    color: #000;\n    background-color: #efefef;\n    border-radius: unset;\n}\n\n", ""]);
 
 // exports
 
@@ -45208,6 +45208,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45224,18 +45300,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             edit: false
         };
     },
-    create: function create() {
+    created: function created() {
         this.fetchTasks();
     },
 
 
     methods: {
         fetchTasks: function fetchTasks() {
+            var _this = this;
+
             fetch('api/tasks').then(function (res) {
                 return res.json();
             }).then(function (res) {
-                console.log(res.data);
+                _this.tasks = res.data;
             });
+        },
+        deleteTask: function deleteTask(id) {
+            var _this2 = this;
+
+            if (confirm('are you sure?')) {
+                fetch('api/task/' + id, {
+                    method: 'delete'
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (data) {
+                    alert('Task Removed');
+                    _this2.fetchTasks();
+                }).catch(function (err) {
+                    return console.log(err);
+                });
+            }
+        },
+        addTask: function addTask() {
+            var _this3 = this;
+
+            if (this.edit === false) {
+                fetch('api/task', {
+                    method: 'post',
+                    body: JSON.stringify(this.task),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (data) {
+                    _this3.task.name = '';
+                    _this3.task.description = '';
+                    _this3.task.duedate = '';
+                    _this3.task.status = '';
+                    alert('task added');
+                    _this3.fetchTasks();
+                }).catch(function (err) {
+                    return console.log(err);
+                });
+            } else {}
         }
     }
 });
@@ -45248,32 +45366,380 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-4" }, [
+        _c(
+          "div",
+          { staticClass: "panel-task panel panel-default border-blue" },
+          [
+            _c("div", { staticClass: "panel-heading" }, [_vm._v("Tasks")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "panel-body task-navi" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  staticClass: "panel-task-form",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addTask($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.task.name,
+                          expression: "task.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "name",
+                        id: "",
+                        placeholder: "New Task"
+                      },
+                      domProps: { value: _vm.task.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.task, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.task.description,
+                          expression: "task.description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "description",
+                        id: "",
+                        cols: "30",
+                        rows: "10"
+                      },
+                      domProps: { value: _vm.task.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.task, "description", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.task.duedate,
+                          expression: "task.duedate"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", name: "duedate", id: "" },
+                      domProps: { value: _vm.task.duedate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.task, "duedate", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "sel1" } }),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.task.status,
+                            expression: "task.status"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "status", id: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.task,
+                              "status",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "0" } }, [
+                          _vm._v("Pending")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "1" } }, [
+                          _vm._v("Active")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "2" } }, [
+                          _vm._v("Blocked")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "3" } }, [
+                          _vm._v("Done")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ]
+              )
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "div",
+          {
+            staticClass: "panel-task task-group panel panel-default border-blue"
+          },
+          [
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade in active",
+                  attrs: { id: "done" }
+                },
+                _vm._l(_vm.tasks, function(task) {
+                  return _c("div", { key: task.id }, [
+                    task.status == 3
+                      ? _c(
+                          "div",
+                          { key: task.id, staticClass: "status-done" },
+                          [
+                            _c("h3", [_vm._v(_vm._s(task.name))]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(task.description))]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v("Due date: " + _vm._s(task.duedate))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTask(task.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete")]
+                            )
+                          ]
+                        )
+                      : _c("div")
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade in", attrs: { id: "active" } },
+                _vm._l(_vm.tasks, function(task) {
+                  return _c("div", { key: task.id }, [
+                    task.status == 1
+                      ? _c(
+                          "div",
+                          { key: task.id, staticClass: "status-active" },
+                          [
+                            _c("h3", [_vm._v(_vm._s(task.name))]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(task.description))]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v("Due date: " + _vm._s(task.duedate))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTask(task.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete")]
+                            )
+                          ]
+                        )
+                      : _c("div")
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade in", attrs: { id: "pending" } },
+                _vm._l(_vm.tasks, function(task) {
+                  return _c("div", { key: task.id }, [
+                    task.status == 0
+                      ? _c(
+                          "div",
+                          { key: task.id, staticClass: "status-pending" },
+                          [
+                            _c("h3", [_vm._v(_vm._s(task.name))]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(task.description))]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v("Due date: " + _vm._s(task.duedate))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTask(task.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete")]
+                            )
+                          ]
+                        )
+                      : _c("div")
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade in", attrs: { id: "block" } },
+                _vm._l(_vm.tasks, function(task) {
+                  return _c("div", { key: task.id }, [
+                    task.status == 2
+                      ? _c(
+                          "div",
+                          { key: task.id, staticClass: "status-blocked" },
+                          [
+                            _c("h3", [_vm._v(_vm._s(task.name))]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(task.description))]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v("Due date: " + _vm._s(task.duedate))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTask(task.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete")]
+                            )
+                          ]
+                        )
+                      : _c("div")
+                  ])
+                }),
+                0
+              )
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c(
-            "div",
-            { staticClass: "panel-task panel panel-default border-blue" },
-            [
-              _c("div", { staticClass: "panel-heading" }, [_vm._v("Tasks")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "panel-body" }, [
-                _vm._v(
-                  "\n                    I'm an example component!\n                "
-                )
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-8" }, [_c("h3", [_vm._v("Welcome ")])])
+    return _c("ul", { staticClass: "nav section-change nav-pills" }, [
+      _c("li", { staticClass: "active" }, [
+        _c("a", { attrs: { "data-toggle": "pill", href: "#done" } }, [
+          _vm._v("Done")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c("a", { attrs: { "data-toggle": "pill", href: "#active" } }, [
+          _vm._v("Active")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c("a", { attrs: { "data-toggle": "pill", href: "#pending" } }, [
+          _vm._v("Pending")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c("a", { attrs: { "data-toggle": "pill", href: "#block" } }, [
+          _vm._v("Block")
+        ])
       ])
     ])
   }
