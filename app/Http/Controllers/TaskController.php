@@ -15,13 +15,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        // if(Auth::check()){
-        //     return view('auth.log');
-        // }else{
-        //     return view('welcome');
-        // }
+
         $tasks = Task::all();
-        return view('tasks/index',compact($tasks));
+        
+        return view('tasks.index',compact('tasks'));
     }
 
     /**
@@ -83,6 +80,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         //
+        return view('tasks.edit',compact('task'));
     }
 
     /**
