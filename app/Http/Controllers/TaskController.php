@@ -43,15 +43,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $names = $request->all();
-
+        
         $names["creatorid"] = Auth::id();
 
-        // print_r($names);
         Task::create($names);
-
         return view('tasks.create');
-
+        
     }
 
     /**
